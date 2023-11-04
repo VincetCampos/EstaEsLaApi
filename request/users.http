@@ -4,7 +4,7 @@
 GET {{url}}
 ###
 
-GET {{url}}/2
+GET {{url}}/71
 ###
 
 ###
@@ -12,19 +12,21 @@ POST {{url}}
 Content-Type: application/json
 
 {
-    "Codigo":25,
-    "Nombre":"Cereal",
-    "Precio":25.00,
-    "Existencia":10
+    "Codigo":71,
+    "Nombre":"Jugo",
+    "Precio":10.00,
+    "Existencia":50
 }
 
 ###
-PUT {{url}}/1
+PUT {{url}}/71
 Content-Type: application/json
 
 {
-    "descripcion":"hola"
-}
+    "Codigo":71,
+    "Nombre":"Jugo",
+    "Precio":10.00,
+    "Existencia":80}
 
 ###
-DELETE {{url}}/4
+DELETE {{url}}/71
