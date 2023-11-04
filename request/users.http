@@ -1,0 +1,28 @@
+@url = http://localhost:4000/users
+
+###
+GET {{url}}
+###
+
+GET {{url}}/2
+###
+
+###
+POST {{url}}
+Content-Type: application/json
+
+{
+    "id":"4",
+    "descripcion":"hola"
+}
+
+###
+PUT {{url}}/1
+Content-Type: application/json
+
+{
+    "descripcion":"hola"
+}
+
+###
+DELETE {{url}}/4

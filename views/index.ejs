@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+    <h3>Bienvenido a express</h3>
+    <div id="Contener"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () =>{
+        await crearTabla()
+      })
+
+      async function crearTabla(){
+        let datos = await fetch("/users")
+        let datosJson = await datos.json()
+        let tabla = `<table border = 1>
+                        <thead>
+                              <tr>
+                                <td>id</td>
+                                <td>descripcion</td>
+                              </tr>
+                        </thead>
+                        <tbody>`;
+        datosJson.forEach(row=>{
+          tabla += "<tr>";
+          Object.keys(row).forEach(k=>{
+            tabla += `<td>${row[k]}</td>`
+          })
+          tabla += "</tr>"
+        })
+        tabla += "</tbody></table>"
+
+        document.getElementById("Contener").innerHTML = tabla;
+        console.log(datosJson)
+      }
+    </script>
+</body>
+</html>
