@@ -10,7 +10,7 @@ router.get('/', async (req, res, next) => {
   try{
     await sql.connect(config)
 
-    const retornarCosas = await sql.query("SELECT id, descripcion FROM LaTabla")
+    const retornarCosas = await sql.query("SELECT Codigo, Nombre, Precio, Existencia FROM Productos")
     data = retornarCosas.recordset
     //await sql.close()
 
@@ -31,9 +31,11 @@ router.post("/", async (req, res, next) =>{
     let connection = await sql.connect(config)
 
     const result = await connection.request()
-                                    .input("id", sql.Int, cosa.id)
-                                    .input("descripcion", sql.VarChar, cosa.descripcion)
-                                    .query("INSERT INTO LaTabla(id, descripcion) VALUES (@id, @descripcion)")
+                                    .input("Codigo", sql.Int, cosa.Codigo)
+                                    .input("Nombre", sql.VarChar, cosa.Nombre)
+                                    .input("Precio", sql.Money, cosa.Precio)
+                                    .input("Existencia", sql.Int, cosa.Existencia)
+                                    .query("INSERT INTO Productos(Codigo, Nombre, Precio, Existencia) VALUES (@Codigo, @Nombre, @Precio, @Existencia)")
     resultado = result.rowsAffected
     //await connection.close()
 
@@ -52,7 +54,7 @@ router.get('/:id', async (req, res, next) => {
   try{
     const connection = await sql.connect(config)
 
-    const retornarCosas = await connection.request().input("id", sql.Int, req.params.id).query("SELECT id, descripcion FROM LaTabla WHERE id = @id")
+    const retornarCosas = await connection.request().input("Codigo", sql.Int, req.params.id).query("SELECT Codigo, Nombre, Precio, Existencia FROM Productos WHERE Codigo = @Codigo")
 
     data = retornarCosas.recordset
     //await sql.close()
@@ -68,18 +70,20 @@ router.get('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req, res, next) => {
   let data = []
-  let {descripcion} = req.body
+  let {Nombre, Precio, Existencia} = req.body
 
   try{
     const connection = await sql.connect(config)
 
-    const retornarCosas = await connection.request().input("id", sql.Int, req.params.id).query("SELECT id, descripcion FROM LaTabla WHERE id = @id")
+    const retornarCosas = await connection.request().input("Codigo", sql.Int, req.params.id).query("SELECT Codigo, Nombre, Precio, Existencia FROM Productos WHERE Codigo = @Codigo")
 
     if(retornarCosas.recordset.length > 0){
       const result = await connection.request()
-                                    .input("id", sql.Int, req.params.id)
-                                    .input("descripcion", sql.VarChar, descripcion)
-                                    .query("UPDATE LaTabla SET descripcion = @descripcion WHERE id = @id")
+                                    .input("Codigo", sql.Int, req.params.id)
+                                    .input("Nombre", sql.VarChar, Nombre)
+                                    .input("Precio", sql.Money, Precio)
+                                    .input("Existencia", sql.Int, Existencia)
+                                    .query("UPDATE Productos SET Nombre = @Nombre, Precio = @Precio, Existencia = @Existencia WHERE Codigo = @Codigo")
       data = retornarCosas.recordset
     }
 
@@ -100,12 +104,12 @@ router.delete('/:id', async (req, res, next) => {
   try{
     const connection = await sql.connect(config)
 
-    const retornarCosas = await connection.request().input("id", sql.Int, req.params.id).query("SELECT id, descripcion FROM LaTabla WHERE id = @id")
+    const retornarCosas = await connection.request().input("Codigo", sql.Int, req.params.id).query("SELECT Codigo, Nombre, Precio, Existencia FROM Productos WHERE Codigo = @Codigo")
 
     if(retornarCosas.recordset.length > 0){
       const result = await connection.request()
-                                    .input("id", sql.Int, req.params.id)
-                                    .query("DELETE FROM LaTabla WHERE id = @id")
+                                    .input("Codigo", sql.Int, req.params.id)
+                                    .query("DELETE FROM Productos WHERE Codigo = @Codigo")
       data = retornarCosas.recordset
     }
 

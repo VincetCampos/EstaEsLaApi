@@ -12,8 +12,10 @@ POST {{url}}
 Content-Type: application/json
 
 {
-    "id":"4",
-    "descripcion":"hola"
+    "Codigo":25,
+    "Nombre":"Cereal",
+    "Precio":25.00,
+    "Existencia":10
 }
 
 ###
